@@ -1,6 +1,4 @@
 <?php
-
-
 include '../db/db.php';
 // header('Content-Type: application/json');
 
@@ -9,15 +7,19 @@ $sendersdetails = [];
 $services = [];
 $bankdetails = [];
 
-
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['projectname'], $_POST['username'])) {
     $projectname = $_POST['projectname'];
     $username = $_POST['username'];
 
-    try{
+    try {
         $pdo->beginTransaction();
 
+        // Fetch data from allproject table
+        $stmt = $pdo->prepare("SELECT * FROM allproject WHERE projectname = ? AND username = ?");
+        $stmt->execute([$projectname, $username]);
+        $allproject = $stmt->fetch();
+
+        // Fetch data from addressanddate table
         $stmt = $pdo->prepare("SELECT * FROM addressanddate WHERE projectname = ? AND username = ?");
         $stmt->execute([$projectname, $username]);
         $addressanddate = $stmt->fetch();
@@ -36,8 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['projectname'], $_POST[
 
         $pdo->commit();
 
-        echo json_encode(["status" => "success","projectname"=> $projectname , "username"=>$username, "addressanddate" => $addressanddate, "sendersdetails" => $sendersdetails, "services" => $services, "bankdetails" => $bankdetails]);
-
         session_start();
         $_SESSION['projectname'] = $projectname;
         $_SESSION['username'] = $username;
@@ -45,9 +45,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['projectname'], $_POST[
         $_SESSION['sendersdetails'] = $sendersdetails;
         $_SESSION['services'] = $services;
         $_SESSION['bankdetails'] = $bankdetails;
-    }   
+        $_SESSION['template'] = $allproject['template'];
 
-    catch(Exception $e){
+        echo json_encode(["status" => "success", "projectname" => $projectname, "username" => $username, "addressanddate" => $addressanddate, "sendersdetails" => $sendersdetails, "services" => $services, "bankdetails" => $bankdetails]);
+    } catch (Exception $e) {
         $pdo->rollBack();
         echo json_encode(["status" => "error", "message" => "An error occurred. Please try again."]);
     }
@@ -55,7 +56,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['projectname'], $_POST[
     http_response_code(405); // Method Not Allowed
     echo json_encode(["status" => "error", "message" => "Invalid request method."]);
 }
-
-?>
-
-

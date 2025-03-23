@@ -1,7 +1,13 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
+
+<?php
 include '../db/db.php';
 session_start();
 $username = "";
+
 
 if (isset($_SESSION['user_id']) && $_GET['user'] == $_SESSION['user_id']) {
     $username = $_GET['user'];
@@ -35,6 +41,9 @@ if (isset($_SESSION['user_id']) && $_GET['user'] == $_SESSION['user_id']) {
 
     <div class="profile-container">
         <div class="profile-modal">
+            <div class="logout-container">
+                <button class="logout-btn" onclick="handleLogout()">Logout</button>
+            </div>
             <div class="profile-header">
                 <img src="../images/img/profile.png" alt="Profile Picture">
                 <h2>Profile Settings</h2>
@@ -63,10 +72,6 @@ if (isset($_SESSION['user_id']) && $_GET['user'] == $_SESSION['user_id']) {
                 <div class="form-group">
                     <label>Confirm Password</label>
                     <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm new password">
-                </div>
-                <div class="form-group">
-                    <label>Address</label>
-                    <input type="text" name="added_add" id="added_add" placeholder="Add Address" value="<?php echo htmlspecialchars($userinfo['address']); ?>">
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="save-btn">Save Changes</button>
@@ -125,6 +130,11 @@ if (isset($_SESSION['user_id']) && $_GET['user'] == $_SESSION['user_id']) {
                     console.error('Error:', error);
                 });
         });
+    </script>
+    <script>
+        function handleLogout() {
+            window.location.replace('../authentication/login/login.html'); // Correct - calls the replace method
+        }
     </script>
 </body>
 

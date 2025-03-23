@@ -1,0 +1,77 @@
+.invoice-modern {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  padding: 40px;
+}
+
+.invoice-modern .container {
+  max-width: 800px;
+  margin: auto;
+  background-color: white;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  gap: 10px !important;
+}
+
+.invoice-modern .name {
+  font-size: 32px;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.invoice-modern .date-section {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.invoice-modern .address-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 20px;
+}
+
+.invoice-modern .service-card {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.invoice-modern .total-card {
+  background-color: #2c3e50;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  border: none;
+  margin-top: 20px !important;
+}
+
+.invoice-modern .bank-details {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 30px;
+}
+
+.invoice-modern .message {
+  text-align: center;
+  color: #6c757d;
+  margin-top: 40px;
+}
+
+@media print {
+  .invoice-modern .total-card {
+    background-color: #fff !important; /* Ensure white background */
+    color: black !important; /* Ensure text is black */
+  }
+
+  .invoice-modern .total-card .label,
+  .invoice-modern .total-card .total-value {
+    color: black !important; /* Ensure label and value are black */
+  }
+}

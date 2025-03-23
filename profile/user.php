@@ -5,19 +5,20 @@ session_start();
 
 $total = 0;
 
-if (isset($_SESSION['projectname'], $_SESSION['username'], $_SESSION['addressanddate'], $_SESSION['sendersdetails'], $_SESSION['services'], $_SESSION['bankdetails'])) {
+if (isset($_SESSION['projectname'], $_SESSION['username'], $_SESSION['addressanddate'], $_SESSION['sendersdetails'], $_SESSION['services'], $_SESSION['bankdetails'], $_SESSION['template'])) {
     $projectname = $_SESSION['projectname'];
     $username = $_SESSION['username'];
     $addressanddate = $_SESSION['addressanddate'];
     $sendersdetails = $_SESSION['sendersdetails'];
     $services = $_SESSION['services'];
     $bankdetails = $_SESSION['bankdetails'];
+    $template = $_SESSION['template'];
 } else {
     die("Project not found");
 }
 
+$templateClass = $template === 'modern' ? 'invoice-modern' : 'invoice-classic';
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,11 +29,14 @@ if (isset($_SESSION['projectname'], $_SESSION['username'], $_SESSION['addressand
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="../invoice/style.css">
+    <?php if ($template === 'modern') : ?>
+        <link rel="stylesheet" href="../profile/modern.css">
+    <?php endif; ?>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <div>
+    <div class="<?php echo $templateClass; ?>">
         <div class="container">
 
             <div id="name" class="name"><?php echo htmlspecialchars($username) ?></div>
@@ -73,19 +77,20 @@ if (isset($_SESSION['projectname'], $_SESSION['username'], $_SESSION['addressand
                     <div class="service-name"><?php echo htmlspecialchars($service['service']); ?></div>
                     <div class="service-total"><?php echo htmlspecialchars($service['price']); ?></div>
                 </div>
+                <?php $total += $service['price']; ?>
             <?php endforeach; ?>
 
 
             <div class="sub-total-section">
                 <div class="sub-total">
                     <div>Sub Total</div>
-                    <div class="sub-total-value"><?php echo htmlspecialchars($total) ?></div>
+                    <div class="sub-total-value"><?php echo htmlspecialchars($total) ?>$</div>
                 </div>
             </div>
 
             <div class="total-card">
                 <span class="label">Total</span>
-                <span class="total-value"><?php echo htmlspecialchars($total) ?></span>
+                <span class="total-value"><?php echo htmlspecialchars($total) ?>$</span>
             </div>
 
             <div class="bank-details">
@@ -111,35 +116,35 @@ if (isset($_SESSION['projectname'], $_SESSION['username'], $_SESSION['addressand
 </body>
 
 <script>
-
     const buttons_main = document.getElementById('three_buttons');
-    document.addEventListener('DOMContentLoaded' , function(){
+    document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('.print').addEventListener('click', () => {
-        buttons_main.style.display = 'none';
-        window.print();
-        window.location.reload();
+            buttons_main.style.display = 'none';
+            window.print();
+            window.location.reload();
+        });
+
+
+
+
+
+        document.addEventListener('keydown', function(event) {
+
+            if (event.ctrlKey && (event.key === 'p' || event.key === 'P')) {
+                event.preventDefault();
+                console.log('Ctrl + P intercepted');
+                buttons_main.style.display = 'none';
+                window.print();
+                window.location.reload();
+
+
+            }
+        })
+
+        document.querySelector('.home-button').addEventListener('click', () => {
+            window.location.href = "./home.php?user=<?php echo htmlspecialchars($username) ?>";
+        });
     });
-
-    
-
-
-
-    document.addEventListener('keydown', function(event) {
-
-    if (event.ctrlKey && (event.key === 'p' || event.key === 'P')) {
-        event.preventDefault(); 
-        console.log('Ctrl + P intercepted');
-        buttons_main.style.display = 'none';
-        window.print();
-        window.location.reload();
-
-
-    }
-    })
-
-    document.querySelector('.home-button').addEventListener('click', () => {
-    window.location.href = "./profile.php?user=<?php echo htmlspecialchars($username) ?>";
-});
-});
 </script>
+
 </html>

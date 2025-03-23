@@ -6,13 +6,13 @@
             </a>
         </div>
         <ul class="nav-links">
-            <li><a href="/Bill-Box/profile/home.php?user=<?php echo $_SESSION['user_id']; ?>">
+            <li><a href="/bill-box/profile/home.php?user=<?php echo $_SESSION['user_id']; ?>">
                     Home</a>
             </li>
-            <li><a href="/Bill-Box/profile/invoices.php?user=<?php echo $_SESSION['user_id']; ?>">
+            <li><a href="/bill-box/profile/invoices.php?user=<?php echo $_SESSION['user_id']; ?>">
                     Invoices</a>
             </li>
-            <li><a href="/Bill-Box/profile/profile.php?user=<?php echo $_SESSION['user_id']; ?>">
+            <li><a href="/bill-box/profile/profile.php?user=<?php echo $_SESSION['user_id']; ?>">
                     Profile</a>
             </li>
         </ul>

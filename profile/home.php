@@ -35,7 +35,7 @@ if (isset($_SESSION['user_id']) && $_GET['user'] == $_SESSION['user_id']) {
         <p>Create and manage your invoices easily</p>
 
         <div class="create-section">
-            <button class="createbtn">
+            <button class="createbtn" id="createInvoiceBtn">
                 +
             </button>
             <span>Create New Invoice</span>
@@ -64,14 +64,23 @@ if (isset($_SESSION['user_id']) && $_GET['user'] == $_SESSION['user_id']) {
                     <?php endforeach; ?>
                 </div>
             </section>
+        <?php else: ?>
+            <section class="no-invoices">
+
+                <h3>No Invoices Yet</h3>
+                <p>Click the '+' button above to create your first invoice</p>
+            </section>
         <?php endif; ?>
     </div>
 
     <script>
-        function HandleCreateBtnClick() {
-            window.location.href = "../form/inputForm.php?user=<?php echo $username ?>";
-        }
-        document.querySelector('.createbtn').addEventListener('click', HandleCreateBtnClick);
+        document.addEventListener('DOMContentLoaded', function() {
+            function HandleCreateBtnClick() {
+                window.location.href = "../form/selectTemplate.php?user=<?php echo $username ?>";
+            }
+
+            document.getElementById('createInvoiceBtn').addEventListener('click', HandleCreateBtnClick);
+        });
     </script>
 
     <!-- Include the same scripts used in invoices.php for view/delete functionality -->
