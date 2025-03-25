@@ -46,8 +46,8 @@ try { // Wrap the entire script in a try...catch block
             $stmt = $pdo->prepare('INSERT INTO allproject (username, projectname, created_at, template) VALUES (?, ?, ?, ?)');
             $stmt->execute([$username, $projectName, $createdAt, $template]);
 
-            $stmt2 = $pdo->prepare('INSERT INTO sendersdetails (username, projectname, email, phoneno) VALUES (?, ?, ?, ?)');
-            $stmt2->execute([$username, $projectName, $billerEmail, $billerPhone]);
+            $stmt2 = $pdo->prepare('INSERT INTO sendersdetails (username, projectname, email, phoneno, invoicename) VALUES (?, ?, ?, ?, ?)');
+            $stmt2->execute([$username, $projectName, $billerEmail, $billerPhone, $billerName]);
 
             $stmt3 = $pdo->prepare('INSERT INTO addressanddate (username, projectname, issdate, duedate, sendersadd, receiversadd) VALUES (?, ?, ?, ?, ?, ?)');
             $stmt3->execute([$username, $projectName, $billingDate, $dueDate, $senderAddress, $receiverAddress]);

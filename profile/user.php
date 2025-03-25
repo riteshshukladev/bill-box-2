@@ -39,7 +39,7 @@ $templateClass = $template === 'modern' ? 'invoice-modern' : 'invoice-classic';
     <div class="<?php echo $templateClass; ?>">
         <div class="container">
 
-            <div id="name" class="name"><?php echo htmlspecialchars($username) ?></div>
+            <div id="name" class="name"><?php echo htmlspecialchars($sendersdetails['invoicename']) ?></div>
 
             <div class="date-section">
                 <div class="date-block">
@@ -94,10 +94,22 @@ $templateClass = $template === 'modern' ? 'invoice-modern' : 'invoice-classic';
             </div>
 
             <div class="bank-details">
-                <div class="bank-detail"><?php echo htmlspecialchars($bankdetails['bankname']) ?></div>
-                <div class="bank-detail"><?php echo htmlspecialchars($bankdetails['accno']) ?></div>
-                <div class="bank-detail"><?php echo htmlspecialchars($bankdetails['ifsc_no']) ?></div>
-                <div class="bank-detail"><?php echo htmlspecialchars($bankdetails['pan']) ?></div>
+                <div class="bank-detail">
+                    <span class="label">Bank Name:</span>
+                    <?php echo htmlspecialchars($bankdetails['bankname']) ?>
+                </div>
+                <div class="bank-detail">
+                    <span class="label">Account Number:</span>
+                    <?php echo htmlspecialchars($bankdetails['accno']) ?>
+                </div>
+                <div class="bank-detail">
+                    <span class="label">IFSC Code:</span>
+                    <?php echo htmlspecialchars($bankdetails['ifsc_no']) ?>
+                </div>
+                <div class="bank-detail">
+                    <span class="label">PAN:</span>
+                    <?php echo htmlspecialchars($bankdetails['pan']) ?>
+                </div>
             </div>
 
             <div class="message">

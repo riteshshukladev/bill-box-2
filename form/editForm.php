@@ -47,7 +47,7 @@ if (!$invoice) {
 
             <div class="form-group">
                 <label>Project Name</label>
-                <input type="text" name="projectname" value="<?php echo htmlspecialchars($invoice['projectname']); ?>" required>
+                <input type="text" name="projectname" value="<?php echo htmlspecialchars($invoice['projectname']); ?>" required readonly>
             </div>
 
             <div class="form-group">
